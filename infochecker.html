@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка информации</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <p>Узнайте классификацию информации</p>
+    <p class="help">Введите и отправьте строку с информацией для получения уровня классификации</p>
+    <form id="dataForm">
+        <label for="dataInput">Введите строку:</label>
+        <input type="text" id="dataInput" required>
+        <button type="submit">Отправить</button>
+    </form>
+    <div id="result"></div>
+</body>
+<script>
+    function classifyData(data) {
+        // Определение критериев классификации
+        const sensitive = ["пароль", "пин код", "паспорт", "биометрические"];
+        const medium = ["gmail", "номер телефона", "mail", "rambler"];
+        const low = ["адрес", "ФИО", "имя", "фамилия", "отчество"];
+
+        // Анализ данных
+        if (sensitive.some(keyword => data.includes(keyword))) {
+            return "Высокий";
+        } else if (medium.some(keyword => data.includes(keyword))) {
+            return "Средний";
+        } else if (low.some(keyword => data.includes(keyword))) {
+            return "Низкий";
+        } else {
+            return "Неизвестный";
+        }
+    }
+
+    document.getElementById('dataForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем отправку формы
+
+        const userInput = document.getElementById('dataInput').value.toLowerCase();
+
+        if (userInput === "") {
+            alert("Поле не может быть пустым!");
+            return;
+        }
+
+        const sensitivityLevel = classifyData(userInput);
+        document.getElementById('result').innerText = `Уровень чувствительности: ${sensitivityLevel}`;
+    });
+</script>
+</html>
