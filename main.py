@@ -6,11 +6,11 @@ def classify_data(data):
 
     # Анализ данных
     if any(keyword in data for keyword in sensitive):
-        return "Высокий"
+        return "Закрытая конфиденциальная информация"
     elif any(keyword in data for keyword in medium):
-        return "Средний"
+        return "Открытая информация с ограничением доступа"
     elif any(keyword in data for keyword in low):
-        return "Низкий"
+        return "Информация без ограничения доступа"
     else:
         return "Неизвестный"
 
@@ -21,4 +21,4 @@ while True:
         break
     else:
         sensitivity_level = classify_data(user_input)
-        print(f"Sensitivity Level: {sensitivity_level}")    
+        print(f"Уровень классификации по безопасности: {sensitivity_level}")    
